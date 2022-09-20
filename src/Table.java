@@ -4,7 +4,6 @@ import java.util.List;
 public class Table {
 
     private final List<Card> cards = new ArrayList<>();
-
     public List<Card> getCards (){return cards;}
 
     public void addCard(Card card){
