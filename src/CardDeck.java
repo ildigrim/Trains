@@ -2,34 +2,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
 public class CardDeck {
-    public List <Card> deck = new ArrayList<>();
 
-    CardDeck (){
+    private final List <Card> deck = new ArrayList<>();
+
+    public CardDeck (){
         createDeck();
         deckShuffle();
     }
 
     public void createDeck (){
-        for (int i = 0; i<12; i++) {
-            addCard(Card.PINC);
-            addCard(Card.WHITE);
-            addCard(Card.BLUE);
-            addCard(Card.YELLOW);
-            addCard(Card.ORANGE);
-            addCard(Card.BLACK);
-            addCard(Card.RED);
-            addCard(Card.GREEN);
-            addCard(Card.LOCOMOTIVE);
-        }
-        addCard(Card.LOCOMOTIVE);
-        addCard(Card.LOCOMOTIVE);
+        fillDeck(Card.PINC, 12);
+        fillDeck(Card.WHITE, 12);
+        fillDeck(Card.BLACK, 12);
+        fillDeck(Card.BLUE, 12);
+        fillDeck(Card.YELLOW, 12);
+        fillDeck(Card.ORANGE, 12);
+        fillDeck(Card.RED, 12);
+        fillDeck(Card.GREEN, 12);
+        fillDeck(Card.LOCOMOTIVE, 14);
     }
 
-    private void addCard(Card card){
-        deck.add(card);
+    private void fillDeck(Card card, int count){
+        for (int i = 0; i<count; i++){
+            deck.add(card);
+        }
     }
 
     public void deckDisplay(){
@@ -42,10 +39,10 @@ public class CardDeck {
         Collections.shuffle(deck);
     }
 
-    void cardsOnTable(){
-
-    }
-    void cardsToPlayer(){
-
+    public Card getCard(){
+        Card card = deck.get(0);
+        deck.remove(0);
+        // todo check emptiness
+        return card;
     }
 }
