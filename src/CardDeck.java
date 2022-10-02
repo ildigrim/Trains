@@ -4,14 +4,14 @@ import java.util.List;
 
 public class CardDeck {
 
-    private final List <Card> deck = new ArrayList<>();
+    private final List <Card> deck = new ArrayList<>();  //колода карт
 
     public CardDeck (){
         createDeck();
         deckShuffle();
     }
 
-    public void createDeck (){
+    public void createDeck (){                //створення колоди для гри
         fillDeck(Card.PINC, 12);
         fillDeck(Card.WHITE, 12);
         fillDeck(Card.BLACK, 12);
@@ -23,13 +23,17 @@ public class CardDeck {
         fillDeck(Card.LOCOMOTIVE, 14);
     }
 
-    private void fillDeck(Card card, int count){
+    private void fillDeck(Card card, int count){   //влкадання в колоду карт одного кольору
         for (int i = 0; i<count; i++){
             deck.add(card);
         }
     }
 
-    public void deckDisplay(){
+    public void addToDeck(List<Card> cardsList){ //оновити колоду з відбою
+        deck.addAll(cardsList);
+    }
+
+    public void deckDisplay(){                        // відображення колоди
         for (Card card: deck){
             System.out.println(card);
         }
@@ -37,12 +41,16 @@ public class CardDeck {
 
     public void deckShuffle(){
         Collections.shuffle(deck);
+    }      //тасування колоди
+
+    public boolean isDeckEmpty(){
+        return deck.isEmpty();
     }
 
-    public Card getCard(){
+
+    public Card getCard(){                                      // витягування карти з колоди
         Card card = deck.get(0);
         deck.remove(0);
-        // todo check emptiness
         return card;
     }
 }

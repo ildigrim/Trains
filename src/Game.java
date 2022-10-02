@@ -8,38 +8,59 @@ public class Game {
     private CardDeck deck;
 
     public Game(int countOfPlayers) {
-        deck = new CardDeck();
-        discard = new Discard();
-        table = new Table();
+        deck = new CardDeck();         //колода карт
+        discard = new Discard();       //відбій
+        table = new Table();           //карти викладені на стіл
         cardOnTable();
 
-
-        for (int i = 0; i< countOfPlayers; i++){
-            List<Card> cards = new ArrayList<>();
-            for (int j = 0; j<5; j++){
-                cards.add(deck.getCard());
-            }
-            playerList.add(new Player(cards, "name", PlayersColors.BLACK));
-            // todo createPlayer()
-        }
-        deck.deckDisplay();
+        createPlayer("First", PlayersColors.YELLOW);
+        createPlayer("Second", PlayersColors.GREEN);
     }
 
-    private void cardOnTable(){
-        while (table.getCards().size() <= 5) {
-            table.addCard(deck.getCard());
+    public List<Player> getPlayers(){
+        return playerList;
+    }
+
+    public Table getTable(){
+        return table;
+    }
+
+    public void createPlayer(String name, PlayersColors color){         //створення гравця
+        List<Card> cards = new ArrayList<>();
+        for (int j = 0; j<5; j++){                  //виділення карт для гравця
+            cards.add(getCardFromDeck());
+        }
+        playerList.add(new Player(cards, name, color));
+
+    }
+
+    private void cardOnTable(){                           // викладення карт на стіл
+        while (table.getCards().size() < 5) {
+            table.addCard(getCardFromDeck());
             if (table.hasThreeLocomotives()){
                 clearTable();
             }
         }
     }
 
-    private void clearTable(){
+    private Card getCardFromDeck(){
+        if (deck.isDeckEmpty()){
+            deck.addToDeck(discard.getCards());
+            deck.deckShuffle();
+            discard.getCards().clear();
+        }
+        return deck.getCard();
+    }
+
+    private void clearTable(){                            //скидання стола при викладенні трьох локомотивів
         for(Card card: table.getCards()){
             discard.addCard(card);
         }
         table.getCards().clear();
     }
+
+    //todo buildWay
+    //todo check tunnel
 
 
 }
